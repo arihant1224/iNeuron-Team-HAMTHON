@@ -11,4 +11,8 @@ class HomeController extends Controller
             'pageTitle' => 'Homepage',
         ]);
     }
+
+    public function uploadPicture(Request $request){
+        return $request->picture;
+    }
 }

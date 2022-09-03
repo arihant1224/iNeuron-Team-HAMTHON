@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'homepage']);
+Route::post('/upload-picture', [HomeController::class, 'uploadPicture']);

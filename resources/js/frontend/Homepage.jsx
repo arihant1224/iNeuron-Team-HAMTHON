@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Camera from "./components/Camera";
 
 export default function Homepage() {
     return (
         <div>
-            <h1>This is homepage</h1>
-            <button className="bg-red-600 text-white p-4">Push</button>
+            <Camera />
         </div>
     );
 }
