@@ -2064,6 +2064,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // React 
 
 __webpack_require__(/*! ./frontend/Homepage */ "./resources/js/frontend/Homepage.jsx");
 
+__webpack_require__(/*! ./frontend/ResultPage */ "./resources/js/frontend/ResultPage.jsx");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -2138,6 +2140,36 @@ if (document.getElementById('homepage')) {
 
 /***/ }),
 
+/***/ "./resources/js/frontend/ResultPage.jsx":
+/*!**********************************************!*\
+  !*** ./resources/js/frontend/ResultPage.jsx ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ResultPage)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+function ResultPage() {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+    children: "This is result page"
+  });
+}
+
+if (document.getElementById('result-page')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(ResultPage, {}), document.getElementById('result-page'));
+}
+
+/***/ }),
+
 /***/ "./resources/js/frontend/components/Camera.jsx":
 /*!*****************************************************!*\
   !*** ./resources/js/frontend/components/Camera.jsx ***!
@@ -2205,26 +2237,35 @@ function Camera() {
 
   function uploadPicture(event) {
     event.preventDefault();
-    var formData = new FormData();
-    formData.append("picture", image);
+    var file = image;
+    var reader = new FileReader();
 
-    try {
-      var response = axios({
-        method: "post",
-        url: "/upload-picture",
-        data: formData,
+    reader.onloadend = function () {
+      axios({
+        url: "https://food-predictor-1.cognitiveservices.azure.com/customvision/v3.0/Prediction/9de911cf-d3a9-4321-84d5-c44dd5811243/detect/iterations/Iteration2/image",
+        data: reader.result,
+        processData: false,
+        contentType: "application/octet-stream",
         headers: {
-          "Content-Type": "multipart/form-data"
+          'Prediction-key': '085414af5dea4771897e844e79c2a027'
+        },
+        method: 'POST',
+        success: function success(response) {
+          var result = response["Predictions"][0];
+          console.log(result);
+        },
+        error: function error(_error) {
+          console.log('error: ' + _error);
         }
+      }).then(function (response) {
+        console.log(response.data["predictions"][0].tagName);
       });
-      response.then(function (r) {
-        console.log(r.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    };
+
+    reader.readAsArrayBuffer(file);
   }
 
+  console.log(image);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
       onClick: openCamera,
@@ -2350,16 +2391,24 @@ function FileInput() {
         headers: {
           'Prediction-key': '085414af5dea4771897e844e79c2a027'
         },
-        method: 'POST',
-        success: function success(response) {
-          var result = response["Predictions"][0];
-          console.log(result);
-        },
-        error: function error(_error) {
-          console.log('error: ' + _error);
-        }
+        method: 'POST'
       }).then(function (response) {
-        console.log(response.data["predictions"][0].tagName);
+        var l = response.data["predictions"];
+        var index, max;
+        max = 0;
+        index = 0;
+
+        for (var i = 0, _pj_a = l.length; i < _pj_a; i += 1) {
+          if (l[i]["probability"] > max) {
+            max = l[i]["probability"];
+            index = i;
+          }
+        }
+
+        var probability = (l[index].probability * 100).toFixed(2);
+        var tagName = l[index].tagName;
+        var url = "/fetch-result/" + probability + "/" + tagName;
+        window.location.href = url;
       });
     };
 

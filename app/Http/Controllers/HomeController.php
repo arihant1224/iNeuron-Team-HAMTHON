@@ -12,7 +12,12 @@ class HomeController extends Controller
         ]);
     }
 
-    public function uploadPicture(Request $request){
-        return $request->picture;
+    public function fetchResult(Request $request){
+        $pageTitle = ucwords($request->tagName);
+        return view('resultPage', [
+            'pageTitle' => $pageTitle,
+            'probability' => $request->probability,
+            'tagName' => ucwords($request->tagName),
+        ]);
     }
 }
