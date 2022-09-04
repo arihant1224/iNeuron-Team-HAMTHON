@@ -2124,12 +2124,19 @@ __webpack_require__.r(__webpack_exports__);
 
 function Homepage() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    className: "text-center pt-8",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+      className: "font-bold text-4xl mb-4",
+      children: "Welcome to Foodies' Theasaurus"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+      className: "font-semibold text-xl mb-2",
       children: "Upload image via camera"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_Camera__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("p", {
+      className: "font-semibold mt-4 mb-4",
       children: "or"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
-      children: "Browse Image"
+      className: "font-semibold text-xl mb-2",
+      children: "Browse image to upload"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_FileInput__WEBPACK_IMPORTED_MODULE_3__["default"], {})]
   });
 }
@@ -2224,6 +2231,15 @@ function Camera() {
       setCameraState = _useState4[1];
 
   var webcamRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var customStyle = {
+    cursor: "pointer",
+    border: "2px solid #dee2e6",
+    padding: "6px",
+    borderRadius: "5px",
+    fontSize: "11px",
+    fontWeight: "bold",
+    backgroundColor: "#dee2e6"
+  };
   var capture = (0,react__WEBPACK_IMPORTED_MODULE_0__.useCallback)(function () {
     var imageSrc = webcamRef.current.getScreenshot();
     setImage(imageSrc);
@@ -2268,16 +2284,19 @@ function Camera() {
   console.log(image);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+      className: "hover:text-blue-600 mb-2",
       onClick: openCamera,
-      children: isOpen ? "Close Camera" : "Open Camera"
+      style: customStyle,
+      children: isOpen ? "CLOSE CAMERA" : "OPEN CAMERA"
     }), isOpen ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        className: "flex justify-center",
         children: image == '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)((react_webcam__WEBPACK_IMPORTED_MODULE_1___default()), {
           audio: false,
-          height: 410,
+          height: 510,
           ref: webcamRef,
           screenshotFormat: "image/jpeg",
-          width: 410,
+          width: 510,
           videoConstraints: videoConstraints
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
           src: image
@@ -2285,16 +2304,19 @@ function Camera() {
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         children: image != '' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            className: "ml-3 bg-gray-300 py-2 px-3 mt-2 rounded-md text-red-700 hover:text-red-500 text-sm font-bold",
             onClick: function onClick(e) {
               e.preventDefault();
               setImage('');
             },
             children: "Retake Image"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+            className: "ml-3 bg-gray-300 py-2 px-3 mt-2 rounded-md text-blue-700 hover:text-blue-500 text-sm font-bold",
             onClick: uploadPicture,
             children: "Upload"
           })]
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "ml-3 bg-gray-300 py-2 px-3 mt-2 rounded-md text-green-700 hover:text-green-500 text-sm font-bold",
           onClick: function onClick(e) {
             e.preventDefault();
             capture();
@@ -2324,14 +2346,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _assets_images_modalCloseBtn_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../assets/images/modalCloseBtn.png */ "./resources/js/assets/images/modalCloseBtn.png");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -2356,9 +2370,7 @@ function FileInput() {
 
   function handleSelectedFile(event) {
     var fileArr = Array.from(event.target.files);
-    setSelectedFiles(function (preValue) {
-      return [].concat(_toConsumableArray(preValue), fileArr);
-    });
+    setSelectedFiles(fileArr);
   }
 
   function deleteFile(file) {
@@ -2416,7 +2428,7 @@ function FileInput() {
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-    className: "mb-4 uppercase",
+    className: "uppercase",
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
         "for": "file-upload",
@@ -2433,8 +2445,9 @@ function FileInput() {
           onChange: handleSelectedFile
         })]
       }), selectedFiles.length !== 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        className: "flex justify-center",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-          className: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+          className: "appearance-none w-fit bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
           children: selectedFiles.map(function (file) {
             return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
               children: [file.name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
@@ -2450,6 +2463,7 @@ function FileInput() {
             }, file.name);
           })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          className: "ml-3 text-blue-700 hover:text-blue-500 text-sm font-bold",
           onClick: handleSubmit,
           children: "Upload"
         })]

@@ -6,9 +6,7 @@ export default function FileInput() {
 
     function handleSelectedFile(event) {
         var fileArr = Array.from(event.target.files);
-        setSelectedFiles(preValue => {
-            return [...preValue, ...fileArr];
-        });
+        setSelectedFiles(fileArr);
     }
 
     function deleteFile(file) {
@@ -63,7 +61,7 @@ export default function FileInput() {
     }
 
     return (
-        <div className="mb-4 uppercase">
+        <div className="uppercase">
             <form>
                 <label for="file-upload" style={customStyle}>
                     <span className="hover:text-blue-600">Choose Files</span>
@@ -77,8 +75,8 @@ export default function FileInput() {
                     />
                 </label>
                 {selectedFiles.length !== 0 ? (
-                    <div>
-                        <div className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <div className="flex justify-center">
+                        <div className="appearance-none w-fit bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
                             {selectedFiles.map((file) => (
                                 <p key={file.name}>
                                     {file.name}
@@ -91,7 +89,7 @@ export default function FileInput() {
                                 </p>
                             ))}
                         </div>
-                        <button onClick={handleSubmit}>
+                        <button className="ml-3 text-blue-700 hover:text-blue-500 text-sm font-bold" onClick={handleSubmit}>
                             Upload
                         </button>
                     </div>

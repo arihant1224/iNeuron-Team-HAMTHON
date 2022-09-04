@@ -14,6 +14,16 @@ export default function Camera(){
     const [isOpen, setCameraState] = useState(false);
     const webcamRef = useRef(null);
 
+    const customStyle = {
+        cursor: "pointer",
+        border: "2px solid #dee2e6",
+        padding: "6px",
+        borderRadius: "5px",
+        fontSize: "11px",
+        fontWeight: "bold",
+        backgroundColor: "#dee2e6",
+    };
+
     const capture = useCallback(() => {
         const imageSrc = webcamRef.current.getScreenshot();
         setImage(imageSrc);
@@ -58,40 +68,44 @@ export default function Camera(){
 
     return (
         <div>
-            <button onClick={openCamera}>
+            <button className="hover:text-blue-600 mb-2" onClick={openCamera} style={customStyle}>
                 {isOpen ? 
-                    "Close Camera"
+                    "CLOSE CAMERA"
                     :
-                    "Open Camera"
+                    "OPEN CAMERA"
                 }
             </button>
             {isOpen ?
                 <div>
-                    <div>
+                    <div className="flex justify-center">
                         {image == '' ? <Webcam
                             audio={false}
-                            height={410}
+                            height={510}
                             ref={webcamRef}
                             screenshotFormat="image/jpeg"
-                            width={410}
+                            width={510}
                             videoConstraints={videoConstraints}
                         /> : <img src={image} />}
                     </div>
                     <div>
                         {image != '' ?
                             <div>
-                                <button onClick={(e) => {
+                                <button
+                                className="ml-3 bg-gray-300 py-2 px-3 mt-2 rounded-md text-red-700 hover:text-red-500 text-sm font-bold"
+                                onClick={(e) => {
                                     e.preventDefault();
                                     setImage('');
                                 }}
                                 >
                                     Retake Image
                                 </button>
-                                <button onClick={uploadPicture}>
+                                <button className="ml-3 bg-gray-300 py-2 px-3 mt-2 rounded-md text-blue-700 hover:text-blue-500 text-sm font-bold" onClick={uploadPicture}>
                                     Upload
                                 </button>
                             </div> :
-                            <button onClick={(e) => {
+                            <button
+                            className="ml-3 bg-gray-300 py-2 px-3 mt-2 rounded-md text-green-700 hover:text-green-500 text-sm font-bold"
+                            onClick={(e) => {
                                 e.preventDefault();
                                 capture();
                             }}

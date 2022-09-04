@@ -5,11 +5,12 @@ import FileInput from "./components/FileInput";
 
 export default function Homepage() {
     return (
-        <div>
-            <h1>Upload image via camera</h1>
+        <div className="text-center pt-8">
+            <h1 className="font-bold text-4xl mb-4">Welcome to Foodies' Theasaurus</h1>
+            <h1 className="font-semibold text-xl mb-2">Upload image via camera</h1>
             <Camera />
-            <p>or</p>
-            <h1>Browse Image</h1>
+            <p className="font-semibold mt-4 mb-4">or</p>
+            <h1 className="font-semibold text-xl mb-2">Browse image to upload</h1>
             <FileInput />
         </div>
     );
