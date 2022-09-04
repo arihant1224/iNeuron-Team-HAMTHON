@@ -49,22 +49,26 @@ export default function Camera(){
                     'Prediction-key': '085414af5dea4771897e844e79c2a027'
                 },
                 method: 'POST',
-                success: function(response) {
-                    var result = response["Predictions"][0];
-                    console.log(result);
-                },
-                error: function(error) {
-                    console.log('error: ' + error);
-                }
             })
             .then((response) => {
-                console.log(response.data["predictions"][0].tagName);
+                var l = response.data["predictions"];
+                var index, max;
+                max = 0;
+                index = 0;
+                for (var i = 0, _pj_a = l.length; i < _pj_a; i += 1) {
+                    if (l[i]["probability"] > max) {
+                        max = l[i]["probability"];
+                        index = i;
+                    }
+                }
+                var probability =  (l[index].probability * 100).toFixed(2);
+                var tagName =  (l[index].tagName);
+                var url = "/fetch-result/" + probability + "/" + tagName;
+                window.location.href = url;
             });
         }
         reader.readAsArrayBuffer(file);
     }
-
-    console.log(image);
 
     return (
         <div>
