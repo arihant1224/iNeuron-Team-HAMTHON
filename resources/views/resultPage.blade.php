@@ -8,5 +8,8 @@
 
     var tagName = '{{base64_encode(json_encode($tagName))}}';
     tagName = JSON.parse(atob(tagName));
+
+    var imageArr = '{{base64_encode(json_encode($imageArr))}}';
+    imageArr = JSON.parse(atob(imageArr));
 </script>
 @endsection
