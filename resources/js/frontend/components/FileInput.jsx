@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import CloseBtn from "../../assets/images/modalCloseBtn.png";
 
-export default function FileInput(props) {
+export default function FileInput() {
     const [selectedFiles, setSelectedFiles] = useState([]);
 
     function handleSelectedFile(event) {
@@ -27,38 +27,72 @@ export default function FileInput(props) {
         backgroundColor: "#dee2e6",
     };
 
-    props.fileFunc(selectedFiles);
+    function handleSubmit(event){
+        event.preventDefault();
+        var file = selectedFiles[0];
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            axios({
+                url: "https://food-predictor-1.cognitiveservices.azure.com/customvision/v3.0/Prediction/9de911cf-d3a9-4321-84d5-c44dd5811243/detect/iterations/Iteration2/image",
+                data: reader.result,
+                processData: false,
+                contentType: "application/octet-stream",
+                headers: {
+                    'Prediction-key': '085414af5dea4771897e844e79c2a027'
+                },
+                method: 'POST',
+                success: function(response) {
+                    var result = response["Predictions"][0];
+                    console.log(result);
+                },
+                error: function(error) {
+                    console.log('error: ' + error);
+                }
+            })
+            .then((response) => {
+                console.log(response.data["predictions"][0].tagName);
+            });
+        }
+        reader.readAsArrayBuffer(file);
+    }
 
     return (
         <div className="mb-4 uppercase">
-            <label for="file-upload" style={customStyle}>
-                <span className="hover:text-blue-600">Choose Files</span>
-                <input
-                    className="hidden"
-                    type="file"
-                    name="file"
-                    id="file-upload"
-                    accept="image/png, image/jpeg, image/jpg"
-                    onChange={handleSelectedFile}
-                />
-            </label>
-            {selectedFiles.length !== 0 ? (
-                <div className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                    {selectedFiles.map((file) => (
-                        <p key={file.name}>
-                            {file.name}
-                            <button
-                                onClick={() => deleteFile(file)}
-                                className="bg-red-400 ml-5 w-3 justify-self-end"
-                            >
-                                <img src={CloseBtn} alt="close-btn-alt" />
-                            </button>
-                        </p>
-                    ))}
-                </div>
-            ) : (
-                <div></div>
-            )}
+            <form>
+                <label for="file-upload" style={customStyle}>
+                    <span className="hover:text-blue-600">Choose Files</span>
+                    <input
+                        className="hidden"
+                        type="file"
+                        name="file"
+                        id="file-upload"
+                        accept="image/png, image/jpeg, image/jpg"
+                        onChange={handleSelectedFile}
+                    />
+                </label>
+                {selectedFiles.length !== 0 ? (
+                    <div>
+                        <div className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            {selectedFiles.map((file) => (
+                                <p key={file.name}>
+                                    {file.name}
+                                    <button
+                                        onClick={() => deleteFile(file)}
+                                        className="bg-red-400 ml-5 w-3 justify-self-end"
+                                    >
+                                        <img src={CloseBtn} alt="close-btn-alt" />
+                                    </button>
+                                </p>
+                            ))}
+                        </div>
+                        <button onClick={handleSubmit}>
+                            Upload
+                        </button>
+                    </div>
+                ) : (
+                    <div></div>
+                )}
+            </form>
         </div>
     );
 }

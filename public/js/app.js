@@ -2114,18 +2114,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Camera__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Camera */ "./resources/js/frontend/components/Camera.jsx");
 /* harmony import */ var _components_FileInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/FileInput */ "./resources/js/frontend/components/FileInput.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 
 
 
@@ -2133,24 +2121,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Homepage() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-      _useState2 = _slicedToArray(_useState, 2),
-      file = _useState2[0],
-      setFile = _useState2[1];
-
-  function takeFile(inputFile) {
-    setFile(inputFile);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    var fileData = new FormData();
-    fileData.append('picture', file);
-    axios.post('/upload-picture', fileData).then(function (response) {
-      console.log(response);
-    });
-  }
-
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
       children: "Upload image via camera"
@@ -2158,12 +2128,7 @@ function Homepage() {
       children: "or"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
       children: "Browse Image"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_FileInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      fileFunc: takeFile
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("button", {
-      onClick: handleSubmit,
-      children: "Upload"
-    })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_FileInput__WEBPACK_IMPORTED_MODULE_3__["default"], {})]
   });
 }
 
@@ -2342,7 +2307,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function FileInput(props) {
+function FileInput() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
       _useState2 = _slicedToArray(_useState, 2),
       selectedFiles = _useState2[0],
@@ -2370,40 +2335,77 @@ function FileInput(props) {
     fontWeight: "bold",
     backgroundColor: "#dee2e6"
   };
-  props.fileFunc(selectedFiles);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    var file = selectedFiles[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function () {
+      axios({
+        url: "https://food-predictor-1.cognitiveservices.azure.com/customvision/v3.0/Prediction/9de911cf-d3a9-4321-84d5-c44dd5811243/detect/iterations/Iteration2/image",
+        data: reader.result,
+        processData: false,
+        contentType: "application/octet-stream",
+        headers: {
+          'Prediction-key': '085414af5dea4771897e844e79c2a027'
+        },
+        method: 'POST',
+        success: function success(response) {
+          var result = response["Predictions"][0];
+          console.log(result);
+        },
+        error: function error(_error) {
+          console.log('error: ' + _error);
+        }
+      }).then(function (response) {
+        console.log(response.data["predictions"][0].tagName);
+      });
+    };
+
+    reader.readAsArrayBuffer(file);
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
     className: "mb-4 uppercase",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
-      "for": "file-upload",
-      style: customStyle,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
-        className: "hover:text-blue-600",
-        children: "Choose Files"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
-        className: "hidden",
-        type: "file",
-        name: "file",
-        id: "file-upload",
-        accept: "image/png, image/jpeg, image/jpg",
-        onChange: handleSelectedFile
-      })]
-    }), selectedFiles.length !== 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-      className: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
-      children: selectedFiles.map(function (file) {
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
-          children: [file.name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
-            onClick: function onClick() {
-              return deleteFile(file);
-            },
-            className: "bg-red-400 ml-5 w-3 justify-self-end",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
-              src: _assets_images_modalCloseBtn_png__WEBPACK_IMPORTED_MODULE_1__["default"],
-              alt: "close-btn-alt"
-            })
-          })]
-        }, file.name);
-      })
-    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {})]
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("form", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("label", {
+        "for": "file-upload",
+        style: customStyle,
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
+          className: "hover:text-blue-600",
+          children: "Choose Files"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
+          className: "hidden",
+          type: "file",
+          name: "file",
+          id: "file-upload",
+          accept: "image/png, image/jpeg, image/jpg",
+          onChange: handleSelectedFile
+        })]
+      }), selectedFiles.length !== 0 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+          className: "appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-2 px-2 mb-4 mt-2 leading-tight focus:outline-none focus:bg-white focus:border-gray-500",
+          children: selectedFiles.map(function (file) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("p", {
+              children: [file.name, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+                onClick: function onClick() {
+                  return deleteFile(file);
+                },
+                className: "bg-red-400 ml-5 w-3 justify-self-end",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("img", {
+                  src: _assets_images_modalCloseBtn_png__WEBPACK_IMPORTED_MODULE_1__["default"],
+                  alt: "close-btn-alt"
+                })
+              })]
+            }, file.name);
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+          onClick: handleSubmit,
+          children: "Upload"
+        })]
+      }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {})]
+    })
   });
 }
 
