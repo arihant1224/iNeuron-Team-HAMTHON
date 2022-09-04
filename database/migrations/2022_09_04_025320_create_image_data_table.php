@@ -18,8 +18,8 @@ class CreateImageDataTable extends Migration
             $table->string('image_url');
             $table->string('name');
             $table->string('video_link');
-            $table->string('nutritional_value');
-            $table->string('ingredients');
+            $table->longText('nutritional_value');
+            $table->longText('ingredients');
             $table->longText('recipe');
             $table->timestamps();
         });
