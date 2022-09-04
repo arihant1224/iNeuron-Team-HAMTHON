@@ -11,5 +11,8 @@
 
     var imageArr = '{{base64_encode(json_encode($imageArr))}}';
     imageArr = JSON.parse(atob(imageArr));
+
+    var imageTag = '{{base64_encode(json_encode($imageTag))}}';
+    imageTag = JSON.parse(atob(imageTag));
 </script>
 @endsection

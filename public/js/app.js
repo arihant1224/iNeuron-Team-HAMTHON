@@ -2543,6 +2543,20 @@ function Gallery() {
       videoLink = _useState2[0],
       setVideoLink = _useState2[1];
 
+  var rootPath = "";
+
+  if (imageTag == "bhindi masala") {
+    rootPath = "/images/uploads/bhindi_masala/";
+  } else if (imageTag == "basundi") {
+    rootPath = "/images/uploads/basundi/";
+  } else if (imageTag == "butter chicken") {
+    rootPath = "/images/uploads/butter_chicken/";
+  } else if (imageTag == "poha") {
+    rootPath = "/images/uploads/poha/";
+  } else if (imageTag == "gulab jamun") {
+    rootPath = "/images/uploads/gulab_jamun/";
+  }
+
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
     className: "ml-5 mt-4 mb-5",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
@@ -2565,7 +2579,7 @@ function Gallery() {
                 children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("img", {
                   alt: "ecommerce",
                   "class": "object-cover object-center w-full h-full block",
-                  src: "https://dummyimage.com/420x260"
+                  src: rootPath + img.image_url
                 })
               })
             });

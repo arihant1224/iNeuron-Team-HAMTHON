@@ -21,6 +21,7 @@ class HomeController extends Controller
             'probability' => $request->probability,
             'tagName' => ucwords($request->tagName),
             'imageArr' => $image_arr,
+            'imageTag' => $request->tagName,
         ]);
     }
 }
