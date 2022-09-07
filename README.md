@@ -1,3 +1,51 @@
+# iNeuron Tech-a-Thon
+        Tech-a-thon is where the sweat, blood and tears drip on the floor.
+
+## Problem Statement - Data Science Domain
+
+        Reverse Image Search Engine
+
+The built models should be able to find database images that correspond to a given query image
+(i.e., the model should retrieve database images containing the same object as the query).
+
+
+### How to collect data?
+         Collect data using online resources.
+
+### What to Submit:
+● Data collection
+
+● Steps of data wrangling.
+
+● Model Training.
+
+● Model Evaluation.
+
+● Model Deployment.
+
+● Create a web-based application to demonstrate the build solution.
+
+● Follow MLOPS practices to build the project.
+
+Note: Demonstrate the provided requirement using a web application.
+
+
+      We have taken data science as our main domain and our problem statement is reverse image search engine.
+      For this we have build web application as the platform to showcase our custom vision machine learning model. 
+      The web application Foodies Thesaurus, focuses on the problem that many people face wherein they don't know the name of the dish. 
+      Our web  Application is designed in such a way that with a single click a person can get the name of the dish, similar images, 
+      its nutritional values, along with the video of its recipe.
+      The tech stack that we have used to solve this problem statement are: in Frontend we have use React JS, in Backend we have 
+      used Larval PHP and APIs. for the database we have used MySQL. for cloud we have used Microsoft Azure and Azure Custom Vision.
+      The machine learning model works on Azure custom vision. We have used kaggle data set to train our model and have performed 
+      data wrangling, trained our dataset in iterations for better model accuracy. Published our model on azure and have used the end 
+      points and APIs for fetching the desired output.
+      If a person visits the website, he or she has the option to upload any photo of the dish either using camera or system.
+      The model will be able to predict the exact name of food, its nutritional value, similar images and recipe.
+
+### Link of Project:
+<a href="https://www.youtube.com/watch?v=j4lSSFEi8MA"> Click here 👈👈  </a>
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
